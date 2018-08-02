@@ -5,7 +5,7 @@ services:
     hostname: proxy
     container_name: proxy
     build:
-      context: nginx/
+      context: proxy/nginx/
       dockerfile: Dockerfile
     ports:
     - 80:80
@@ -53,7 +53,7 @@ services:
     hostname: db
     container_name: db
     build:
-      context: h2
+      context: db/h2
       dockerfile: Dockerfile
     ports:
     - 81:81
@@ -61,7 +61,7 @@ services:
     networks:
     - local
     volumes:
-    - .\sql\h2\:/data/db
+    - .\db\h2\sql\:/data/db
 
 networks:
   local:
