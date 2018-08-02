@@ -3,10 +3,6 @@ FROM tomcat
 
 LABEL maintainer="ibalago@gmail.com"
 
-# H2
-ENV H2_VERSION "1.4.197"
-ADD "https://central.maven.org/maven2/com/h2database/h2/${H2_VERSION}/h2-${H2_VERSION}.jar" /usr/local/tomcat/lib
-
 ENV VERSION=1.0.0
 ENV APP_FILE http://192.168.100.3:80/ibalago/frontend/web/${VERSION}/web-${VERSION}.war
 ENV CONFIG_FILE http://192.168.100.3:80/ibalago/frontend/config/${VERSION}/config-${VERSION}.tar
