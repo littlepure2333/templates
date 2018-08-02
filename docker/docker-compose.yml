@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  proxy:
+    hostname: proxy
+    container_name: proxy
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    ports:
+    - 80:80
+    - 443:443
+    networks:
+    - local
+    depends_on:
+    - frontend
+    volumes:
+      - .\logs\nginx\:/var/log/nginx/
+
+  frontend:
+    hostname: frontend
+    container_name: frontend
+    build:
+      context: frontend/
+      dockerfile: Dockerfile
+    ports:
+    - 8080
+    - 8443
+    networks:
+    - local
+    depends_on:
+    - backend
+    volumes:
+    - .\logs\tomcat\frontend\:/usr/local/tomcat/logs/
+
+  backend:
+    hostname: backend
+    container_name: backend
+    build:
+      context: backend/
+      dockerfile: Dockerfile
+    ports:
+    - 8080
+    - 8443
+    networks:
+    - local
+    depends_on:
+    - db
+    volumes:
+    - .\logs\tomcat\frontend\:/usr/local/tomcat/logs/
+
+  db:
+    hostname: db
+    container_name: db
+    build:
+      context: h2
+      dockerfile: Dockerfile
+    ports:
+    - 81:81
+    - 1521:1521
+    networks:
+    - local
+    volumes:
+    - .\sql\h2\:/data/db
+
+networks:
+  local:
+    driver: bridge
